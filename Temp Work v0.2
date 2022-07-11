@@ -1,0 +1,245 @@
+import javax.swing.JOptionPane;
+import java.util.Date; 
+import java.util.Scanner;
+
+// student name: student name here
+// student ID:  student ID here
+
+public class ReSitProject{
+  
+    public static void main(String args[])
+    {
+      // Declaring an array of fish objects
+      Fish fishes[] = new Fish[4];
+      
+      fishes[0] = new Fish(1202,"Grass carp",1.50);
+      fishes[1] = new Fish(1400,"Peruvian anchovet",2.50);
+      fishes[2] = new Fish(1490,"Silver carp",3.50);
+      fishes[3] = new Fish(1111,"Common carp",4.50);
+      
+      
+      
+      Boolean repeatMenu = true;
+      //Fish.printData(fishes);
+      while (repeatMenu==true){
+          Fish.menu(fishes);
+          Scanner myObj = new Scanner(System.in);  
+        
+          System.out.println( "<Would you like to come back to the main menu?>:"+ "\n");
+          System.out.println("=========================" + "\n");
+          System.out.println("<Press 1 for Yes>" + "\n");
+          System.out.println("<Press 2 for No>" + "\n");
+          System.out.println("=========================" + "\n");
+        
+          int Repeat = myObj.nextInt();
+        
+          if (Repeat == 1){
+              repeatMenu=true;
+         }else if (Repeat == 2){
+              repeatMenu=false;
+            System.out.println("Goodbye!");
+        }
+          
+      }
+      
+      
+    }
+    
+}
+  
+/*
+(1)
+Creating a fish class with the attributes
+id,name, and price
+
+*/
+class Fish {
+  
+    public int id;
+    public String name;
+    public Double price;
+    
+  
+    /*
+    (2)
+    Fish class constructor
+    */
+    Fish(int id, String name, Double price)
+    {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+    
+    
+    public static void menu(Fish [] fishesArray)
+    {
+         // Create a Scanner object
+        System.out.println("MENU:");
+        System.out.println("=========================" + "\n");
+        System.out.println("<Press 1 for Input Data> " + "\n");
+        System.out.println( "<Press 2 for Search Data>" + "\n"); 
+        System.out.println("<Press -1 to Exit>" + "\n");
+        System.out.println("=========================" + "\n");
+        
+        Scanner myObj = new Scanner(System.in);  
+        
+        System.out.println("<Option Number>:");
+        String Option = myObj.nextLine();
+        
+        if (Option.equalsIgnoreCase("1")){
+          Fish.inputData(fishesArray);
+            
+        }else if (Option.equalsIgnoreCase("2")){
+            Fish.searchData(fishesArray);
+            
+        }else if (Option.equalsIgnoreCase("-1")){
+            System.out.println("Quitting Application - Goodbye! " + "\n");
+            System.exit(0);
+            
+        }else{
+            System.out.println("Please choose the options from the following menu");
+            Fish.menu(fishesArray);
+        }
+         
+     
+    }
+  
+    
+    public static void printData(Fish [] fishesArray, int objIndex)
+    {       
+            System.out.println("FISH DETAILS:");
+            System.out.println("====================");
+            System.out.println("");
+            System.out.printf("FISH ID: %s",fishesArray[objIndex].id);
+            System.out.println("");
+            System.out.printf("FISH NAME: %s",fishesArray[objIndex].name);
+            System.out.println("");
+            System.out.printf("FISH PRICE: %s",fishesArray[objIndex].price);
+            System.out.println("");
+            System.out.println("====================");
+            System.out.println("");
+    }
+    
+      public static void searchData(Fish [] fishesArray)
+    {
+       boolean fish_found = false;
+       
+       
+       System.out.println("\n");
+       System.out.println("What would you like to search by?" + "\n");
+       System.out.println("=========================" + "\n");
+       System.out.println("<Press 1 for Search by Fish ID> " + "\n");
+       System.out.println("<Press 2 for Search by Fish Name>" + "\n");
+       System.out.println("<Press 3 for Search by Fish Price> " + "\n");
+       System.out.println("=========================" + "\n");
+       
+        Scanner sc_option = new Scanner(System.in);  
+        System.out.println("<Option Number>:");
+        int Option = sc_option.nextInt();
+        
+        if (Option == 1){
+             
+             Scanner fishID_scanner = new Scanner(System.in);  
+             System.out.println("<Fish ID>:");
+             int fishID = fishID_scanner.nextInt();
+             
+             for (int i = 0; i < fishesArray.length; i++) {
+                if (fishesArray[i].id == fishID){
+                     Fish.printData(fishesArray,i);
+                     fish_found = true;
+                }
+                    
+                }
+                
+                if (fish_found == false){
+                    System.out.printf("The fish containing the following id <%s> has not been found", fishID);
+                }
+             
+             
+            
+            
+        }else if (Option == 2){
+            Scanner fishName_scanner = new Scanner(System.in);  
+            System.out.println("<Fish Name>:");
+            String fishName = fishName_scanner.nextLine();
+            
+            for (int i = 0; i < fishesArray.length; i++) {
+                if (fishName.equals(fishesArray[i].name)){
+                     Fish.printData(fishesArray,i);
+                     fish_found = true;
+                }
+                    
+                }
+                
+            if (fish_found == false){
+                    System.out.printf("The fish containing the following name <%s> has not been found", fishName);
+                }
+            
+            
+         
+            
+        }else if (Option == 3){
+            Scanner fishPrice_scanner = new Scanner(System.in);  
+            System.out.println("<Fish Price>:");
+            Double fishPrice = fishPrice_scanner.nextDouble();
+            String fishPrice_string = Double.toString(fishPrice);
+            
+            for (int i = 0; i < fishesArray.length; i++) {
+                if (fishPrice_string.equals(fishesArray[i].price)){
+                     Fish.printData(fishesArray,i);
+                }
+                    
+                }
+            
+            
+        }else{
+            System.out.println("Please choose one option from the following menu");
+            Fish.searchData(fishesArray);
+        }
+        
+        
+        
+        
+    }
+    
+    public static void inputData(Fish [] fishesArray)
+    {
+       Scanner sc1 = new Scanner(System.in);
+       System.out.println("<New Fish ID>:");
+       String fishID = sc1.nextLine();
+       int fishID_integer = Integer.parseInt(fishID);
+       
+       Scanner sc2 = new Scanner(System.in);
+       System.out.println("<New Fish Name>:");
+       String fishName = sc2.nextLine();
+       
+       Scanner sc3 = new Scanner(System.in);
+       System.out.println("<New Fish Price>:");
+       String fishPrice = sc3.nextLine();
+       Double fishPrice_Double = Double.parseDouble(fishPrice);
+       
+       
+       
+       
+       Fish newFishes[] = new Fish[fishesArray.length + 1];
+       
+       for (int i = 0; i < fishesArray.length; i++) {
+              newFishes[i] = fishesArray[i];
+            }
+       
+       newFishes[newFishes.length - 1] = new Fish(fishID_integer,fishName,fishPrice_Double);
+       System.out.println("");
+       System.out.println("SYSTEM UPDATED");
+       System.out.println("===========================");
+       System.out.printf("New Fish ID: %s" + "\n" + "New Fish Name: %s" + "\n" + "New Fish Price: %s", newFishes[newFishes.length - 1].id,newFishes[newFishes.length - 1].name,newFishes[newFishes.length - 1].price);
+       System.out.println("===========================");
+       
+       Fish.menu(newFishes);
+       
+      
+      
+        
+        
+    }
+}
